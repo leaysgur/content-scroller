@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>jQuery.content-scroller | Sample</title>
+<style>
+body {
+  background-color: #eee;
+}
+h1 {
+  font-size: 1.4em;
+}
+h2 {
+  font-size: 1.2em;
+}
+
+.scroll-wrap {
+  position: relative;
+  overflow: hidden;
+
+  height: 100px;
+  background-color: #fff;
+}
+.scroll-area {
+}
+.scroll-bar {
+  position: absolute;
+  right: 0;
+  width: 4px;
+  background-color: rgba(0,0,0,.5);
+}
+</style>
+</head>
+<body>
+<h1>jQuery.content-scroller sample</h1>
+
+<h2>Minimum</h2>
+<div id="js-scroll-wrap-1" class="scroll-wrap">
+  <div id="js-scroll-bar-1" class="scroll-bar"></div>
+  <div id="js-scroll-area-1" class="scroll-area">
+    ここに<br>
+    <br>
+    <br>
+    それは<br>
+    もう<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    相当に<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    長い<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    ながーい<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    ドキュメントが<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    はいる<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    ！
+  </div>
+</div>
+
+<h2>No ScrollBar</h2>
+<div id="js-scroll-wrap-2" class="scroll-wrap">
+  <div id="js-scroll-area-2" class="scroll-area">
+    バーなんてなくたって<br>
+    ながーい<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    ドキュメント<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    スクロールできるよ<br>
+  </div>
+</div>
+
+
+<h2>Too short</h2>
+<div id="js-scroll-wrap-3" class="scroll-wrap">
+  <div id="js-scroll-bar-3" class="scroll-bar"></div>
+  <div id="js-scroll-area-3" class="scroll-area">
+    みじかい<br>
+    ドキュメントは<br>
+    無効です<br>
+  </div>
+</div>
+
+<script src="./jquery.js"></script>
+<script src="../src/jquery.content-scroller.js"></script>
+</script>
+<script>
+;(function(global) {
+  'use strict';
+
+  new Scroll({
+    scrollWrap: $('#js-scroll-wrap-1'),
+    scrollArea: $('#js-scroll-area-1'),
+    scrollBar:  $('#js-scroll-bar-1')
+  }).start();
+
+
+  new Scroll({
+    scrollWrap: $('#js-scroll-wrap-2'),
+    scrollArea: $('#js-scroll-area-2'),
+    disableScrollBar: true
+  }).start();
+
+
+  new Scroll({
+    scrollWrap: $('#js-scroll-wrap-3'),
+    scrollArea: $('#js-scroll-area-3'),
+    scrollBar:  $('#js-scroll-bar-3')
+  }).start();
+
+}(window));
+</script>
+</body>
+</html>

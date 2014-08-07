@@ -27,7 +27,7 @@
                 return p;
             }
         }
-    }(['transform', 'webkitTransform']));
+    }(['transform', 'webkitTransform', 'mozTransform', 'oTransform', 'msTransform']));
 
 
     // クラス定義
@@ -55,13 +55,16 @@
          */
         initialize: function(options) {
             options = options || {};
-            console.warn('Scroll: initialize', options);
+            console.log('Scroll: initialize', options);
 
             this._ui = $.extend({
                 scrollWrap: $('#js-scroll-wrap'),
                 scrollArea: $('#js-scroll-area'),
                 scrollBar:  $('#js-scroll-bar')
             }, options);
+
+            // 要素ちゃんとある？
+            this._ensureElm();
 
             // スクロールバー出すかどうか
             this._disableScrollBar = options.disableScrollBar || false;
@@ -83,6 +86,22 @@
             this._newBarY    = null;
             this._distScroll = null;
             this._distBar    = null;
+
+            return this;
+        },
+
+        /**
+         * そもそも要素がちゃんとあるかチェックする
+         *
+         * @name ensureElm
+         */
+        _ensureElm: function() {
+            var isWrapMiss = (this._ui.scrollWrap.length === 0);
+            var isAreaMiss = (this._ui.scrollArea.length === 0);
+
+            if (isWrapMiss || isAreaMiss) {
+              throw new Error('#scrollWrap or #scrollArea is not exist!');
+            }
         },
 
         /**
@@ -95,7 +114,7 @@
          * @name start
          */
         start: function() {
-            console.warn('Scroll: start');
+            console.log('Scroll: start');
             var containerHeight = this._ui.scrollWrap.height();
             var scrollAreaHeight = this._ui.scrollArea.height();
             var displayHeight = (scrollAreaHeight < containerHeight) ? containerHeight : scrollAreaHeight;
@@ -125,6 +144,7 @@
          * @name dispose
          */
         dispose: function() {
+            console.log('Scroll: dispose');
             if (!this._disableScrollBar) {
                 this._ui.scrollBar.css({
                     height: 0
@@ -146,6 +166,7 @@
          */
         _setScrollBar: function(containerHeight, displayHeight) {
             if (this._disableScrollBar) { return; }
+            console.log('Scroll: setScrollBar');
             var height = ~~(containerHeight * containerHeight / displayHeight);
             this._ui.scrollBar.css({
                 height: height + 'px'
@@ -160,6 +181,7 @@
          * @name addEventListener
          */
         _addEventLitener: function() {
+            console.log('Scroll: addEventListener');
             this._ui.scrollArea.on('touchstart', $.proxy(this._onStart, this))
                 .on('touchend', $.proxy(this._onEnd, this));
             return this;
@@ -171,6 +193,7 @@
          * @name removeEventListener
          */
         _removeEventLitener: function() {
+            console.log('Scroll: removeEventListener');
             this._ui.scrollArea.off('touchstart')
                 .off('touchend')
                 .off('touchmove');
@@ -185,6 +208,7 @@
          *     jQueryEventを想定してる(ので、originalEvent確保する)
          */
         _onStart: function(ev) {
+            console.log('Scroll: onStart');
             ev = ev.originalEvent;
 
             this._clearTimer();
@@ -205,6 +229,7 @@
          *     jQueryEventを想定してる(ので、originalEvent確保する)
          */
         _onEnd: function(ev) {
+            console.log('Scroll: onEnd');
             ev = ev.originalEvent;
 
             var tempTouch = __isMobile ? ev.changedTouches[0].pageY : ev.pageY;
@@ -229,6 +254,7 @@
          *     jQueryEventを想定してる(ので、originalEvent確保する)
          */
         _onMove: function(ev) {
+            console.log('Scroll: onMove');
             ev = ev.originalEvent;
             ev.preventDefault();
 
@@ -262,7 +288,9 @@
         _getScrollAreaY: function() {
             var translate3d = __getTranslate3d(this._ui.scrollArea[0]);
             var y = translate3d.split(',')[1] || 0;
-            return parseInt(y || 0, 10);
+            y = parseInt(y, 10);
+            console.log('Scroll: getScrollAreaY', y);
+            return y;
         },
 
         /**
@@ -273,6 +301,8 @@
          *     translateYの値
          */
         _setScrollAreaY: function(y) {
+            y = parseInt(y, 10);
+            console.log('Scroll: setScrollAreaY', y);
             __setTranslate3d(this._ui.scrollArea[0], 0, y);
         },
 
@@ -283,6 +313,7 @@
          */
         _followScrollBar: function() {
             if (this._disableScrollBar) { return; }
+            console.log('Scroll: followScrollBar');
             this._newBarY = this._newAreaY * this._distBar / this._distScroll;
             __setTranslate3d(this._ui.scrollBar[0], 0, -this._newBarY);
         },
@@ -293,6 +324,7 @@
          * @name setTimer
          */
         _setTimer: function() {
+            console.log('Scroll: setTimer');
             this._timer = setInterval($.proxy(this._loop, this), 15);
             return this;
         },
@@ -303,6 +335,7 @@
          * @name clearTimer
          */
         _clearTimer: function() {
+            console.log('Scroll: clearTimer');
             clearInterval(this._timer);
             this._timer = null;
             return this;
@@ -310,6 +343,7 @@
 
         /**
          * 慣性スクロールのキモ
+         * CSSのtransitionでもよかったかも？
          *
          * @name loop
          */
@@ -317,7 +351,9 @@
             if (this._isTouching) { return; }
 
             var y = this._getScrollAreaY();
+            // 上方向にひっぱりきった時
             if (y > 0) {
+                console.log('Scroll: loop@ y > 0');
                 this._newAreaY = y - y / 12;
                 this._speedY = 0;
                 this._setScrollAreaY(this._newAreaY);
@@ -326,7 +362,9 @@
                     this._setScrollAreaY(0);
                 }
             }
+            // 下方向にひっぱりきった時
             else if (y < -this._limitAreaY) {
+                console.log('Scroll: loop@ y < limitArea');
                 this._newAreaY = y + (-this._limitAreaY - y) / 12;
                 this._speedY = 0;
                 this._setScrollAreaY(this._newAreaY);
@@ -336,6 +374,7 @@
                 }
             }
             else {
+                console.log('Scroll: loop');
                 this._newAreaY = y + this._speedY;
                 this._speedY *= 0.9;
                 this._setScrollAreaY(this._newAreaY);
