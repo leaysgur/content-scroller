@@ -3,7 +3,7 @@ jquery.content-scroller
 
 ページ内の一部分をスクロールできるようにするやつ
 
-See [Sample](#TBD)
+See [Sample](#TBD)@まだアップしてません
 
 ### 使い方
 最低限のサンプルです。
@@ -30,6 +30,7 @@ See [Sample](#TBD)
 }
 
 .scroll-area {
+  /* 好きなスタイルに */
 }
 
 .scroll-bar {
