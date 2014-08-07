@@ -1,11 +1,11 @@
 {
-  "name": "type-write.js",
+  "name": "jquery.content-scroller.js",
   "version": "0.0.1",
-  "description": "Display texts with typing effect like typewriter.",
-  "main": "dist/type-write.min.js",
+  "description": "Make Content scrollable with jQuery",
+  "main": "dist/jquery.content-scroller.min.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/leader22/type-write.js"
+    "url": "https://github.com/leader22/jquery.content-scroller"
   },
   "author": "leader22 <y.sugiura.0316@gmail.com>",
   "license": "MIT",
