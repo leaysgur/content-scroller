@@ -46,17 +46,39 @@ See [Sample](http://labs.lealog.net/content-scroller-sample/)
 
 #### JavaScript
 ```javascript
+// 初期化は要素があればいつでもOKです
 var scroll = new Scroll({
     scrollWrap: $('#js-scroll-wrap'),
     scrollArea: $('#js-scroll-area'),
     scrollBar:  $('#js-scroll-bar')
 });
 
+// これではじめてスクロールできるようになります
 scroll.start();
+
+
+// 使わなくなったらこれを
+scroll.dispose();
 ```
 
 見た目はお好きにスタイリングしてください。
 
+
+### 初期化オプション
+
+#### options.scrollWrap
+``jQuery``でラップされた、スクロールで制御したい要素
+
+#### options.scrollArea
+``jQuery``でラップされた、実際にスクロールしたい要素
+
+#### options.scrollBar
+``jQuery``でラップされた、スクロールバーとして扱う要素
+
+#### options.disableScrollBar
+スクロールバーを使わないなら``true``(デフォルトは``false``)
+
 ### 諸注意
-- jQueryに依存しています
+- jQueryに依存していますが、コードはプラグインっぽくないです
+- 中途半端にちゃんとしてて、中途半端に雑な実装があります
 - PCのマウスホイール/トラックパッドの移動には対応してません(=PCでは実質使いものにならない)
