@@ -150,6 +150,8 @@
                     height: 0
                 });
             }
+            // 同じ要素を使いまわすこともあるので、リセットしておく
+            this._setScrollAreaY(0);
             this._removeEventLitener();
             this._clearTimer();
         },
