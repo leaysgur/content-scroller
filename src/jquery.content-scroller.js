@@ -51,7 +51,9 @@
          * @param {Object} options.scrollBar
          *     スクロールバーに使う要素
          * @param {Boolean} options.disableScrollbar
-         *     スクロールバー見せない or NOT(デフォルトでは見せる)
+         *     スクロールバー見せない or NOT (デフォルトでは見せるのでfalse)
+         * @param {Boolean} options.startAtBottom
+         *     スクロールしきった状態ではじめる or NOT (デフォルトはfalse)
          */
         initialize: function(options) {
             options = options || {};
@@ -68,6 +70,9 @@
 
             // スクロールバー出すかどうか
             this._disableScrollBar = options.disableScrollBar || false;
+
+            // スクロールしきった状態からはじめるかどうか
+            this._startAtBottom = options.startAtBottom || false;
 
             // 触ってるかどうかフラグ(さわってたらタイマー止めるとか)
             this._isTouching = false;
@@ -114,7 +119,6 @@
          * @name start
          */
         start: function() {
-            console.log('Scroll: start');
             var containerHeight = this._ui.scrollWrap.height();
             var scrollAreaHeight = this._ui.scrollArea.height();
             var displayHeight = (scrollAreaHeight < containerHeight) ? containerHeight : scrollAreaHeight;
@@ -132,8 +136,15 @@
             this._removeEventLitener()._addEventLitener();
 
             this._limitAreaY = displayHeight - containerHeight;
-            // 最初にstyle当てておかないと、次取れない
-            this._setScrollAreaY(0);
+
+            // 最初にstyle当てておかないと、次取れなくて困る
+            // オプションによってスクロールしきった状態からスタート
+            if (this._startAtBottom) {
+                this._setScrollAreaY(-this._limitAreaY);
+            } else {
+                this._setScrollAreaY(0);
+            }
+            console.log('Scroll: start', this);
         },
 
         /**
