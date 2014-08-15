@@ -78,6 +78,10 @@ scroll.dispose();
 #### options.disableScrollBar
 スクロールバーを使わないなら``true``(デフォルトは``false``)
 
+#### options.startAtBottome
+スクロールしきった状態からスタートするなら``true``(デフォルトは``false``)
+
+
 ### 諸注意
 - jQueryに依存していますが、コードはプラグインっぽくないです
 - 中途半端にちゃんとしてて、中途半端に雑な実装があります
