@@ -3,7 +3,7 @@ content-scroller
 
 ページ内の一部分をスクロールできるようにするやつ
 
-See [Sample](http://labs.lealog.net/content-scroller-sample/)
+See [Sample](http://labs.lealog.net/content-scroller-sample/)(この先はまだ古いバージョン..)
 
 ### 使い方
 最低限のサンプルです。
