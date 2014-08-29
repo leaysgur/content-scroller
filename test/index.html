@@ -125,31 +125,32 @@ h2 {
   </div>
 </div>
 
-<script src="./jquery.js"></script>
+<script src="../test/jquery.js"></script>
 <script src="../src/jquery.content-scroller.js"></script>
 </script>
 <script>
 ;(function(global) {
   'use strict';
+  var $ = function(id) { return global.document.getElementById(id); };
 
   new Scroll({
-    scrollWrap: $('#js-scroll-wrap-1'),
-    scrollArea: $('#js-scroll-area-1'),
-    scrollBar:  $('#js-scroll-bar-1')
+    scrollWrap: $('js-scroll-wrap-1'),
+    scrollArea: $('js-scroll-area-1'),
+    scrollBar:  $('js-scroll-bar-1')
   }).start();
 
 
   new Scroll({
-    scrollWrap: $('#js-scroll-wrap-2'),
-    scrollArea: $('#js-scroll-area-2'),
+    scrollWrap: $('js-scroll-wrap-2'),
+    scrollArea: $('js-scroll-area-2'),
     disableScrollBar: true
   }).start();
 
 
   new Scroll({
-    scrollWrap: $('#js-scroll-wrap-3'),
-    scrollArea: $('#js-scroll-area-3'),
-    scrollBar:  $('#js-scroll-bar-3')
+    scrollWrap: $('js-scroll-wrap-3'),
+    scrollArea: $('js-scroll-area-3'),
+    scrollBar:  $('js-scroll-bar-3')
   }).start();
 
 }(window));
