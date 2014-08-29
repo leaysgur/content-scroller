@@ -7,7 +7,7 @@
 
   gulp.task('uglify', function() {
     gulp.src([
-      'src/jquery.content-scroller.js'
+      'src/content-scroller.js'
     ])
         .pipe(uglify({
           mangle: true,
