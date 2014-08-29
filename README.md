@@ -1,4 +1,4 @@
-jquery.content-scroller
+content-scroller
 =======================
 
 ページ内の一部分をスクロールできるようにするやつ
@@ -48,9 +48,9 @@ See [Sample](http://labs.lealog.net/content-scroller-sample/)
 ```javascript
 // 初期化は要素があればいつでもOKです
 var scroll = new Scroll({
-    scrollWrap: $('#js-scroll-wrap'),
-    scrollArea: $('#js-scroll-area'),
-    scrollBar:  $('#js-scroll-bar')
+    scrollWrap: $('#js-scroll-wrap')[0], // jQueryではなく、生のDOMを使います
+    scrollArea: $('#js-scroll-area')[0],
+    scrollBar:  $('#js-scroll-bar')[0]
 });
 
 // これではじめてスクロールできるようになります
@@ -67,13 +67,13 @@ scroll.dispose();
 ### 初期化オプション
 
 #### options.scrollWrap
-``jQuery``でラップされた、スクロールで制御したい要素
+スクロールで制御したい要素
 
 #### options.scrollArea
-``jQuery``でラップされた、実際にスクロールしたい要素
+実際にスクロールしたい要素
 
 #### options.scrollBar
-``jQuery``でラップされた、スクロールバーとして扱う要素
+スクロールバーとして扱う要素
 
 #### options.disableScrollBar
 スクロールバーを使わないなら``true``(デフォルトは``false``)
@@ -83,6 +83,4 @@ scroll.dispose();
 
 
 ### 諸注意
-- jQueryに依存していますが、コードはプラグインっぽくないです
-- 中途半端にちゃんとしてて、中途半端に雑な実装があります
 - PCのマウスホイール/トラックパッドの移動には対応してません(=PCでは実質使いものにならない)
