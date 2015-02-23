@@ -18,8 +18,6 @@
 
     // 環境情報やら定数やら
     // ----------------------------------------------------------------------------
-    var document = global.document;
-    var q = function(id) { return document.getElementById(id); };
     var __isMobile = 'ontouchstart' in global;
     var __supportTransform = (function(prop) {
         var div = document.createElement('div');
