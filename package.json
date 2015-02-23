@@ -1,6 +1,6 @@
 {
   "name": "content-scroller.js",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Make Content scrollable!",
   "main": "dist/content-scroller.min.js",
   "repository": {

@@ -16,9 +16,9 @@
 
     // 環境情報やら定数やら
     // ----------------------------------------------------------------------------
-    var __isMobile = 'ontouchstart' in global;
     var document = global.document;
     var q = function(id) { return document.getElementById(id); };
+    var __isMobile = 'ontouchstart' in global;
     var __supportTransform = (function(prop) {
         var div = document.createElement('div');
         var i = 0, l = prop.length;
@@ -130,6 +130,11 @@
          * @name start
          */
         start: function() {
+            // モバイルじゃなければ何もせずそれらしく
+            if (!__isMobile) {
+                this._ui.scrollWrap.style['overflow'] = 'scroll';
+                return;
+            }
             var containerHeight = this._ui.scrollWrap.offsetHeight;
             var scrollAreaHeight = this._ui.scrollArea.offsetHeight;
             var displayHeight = (scrollAreaHeight < containerHeight) ? containerHeight : scrollAreaHeight;
@@ -249,7 +254,7 @@
             this._preAreaY = 0;
             this._speedY = 0;
 
-            this._startTouchY = __isMobile ? ev.changedTouches[0].pageY : ev.pageY;
+            this._startTouchY = ev.changedTouches[0].pageY;
             this._startAreaY = this._getScrollAreaY();
             this._ui.scrollArea.addEventListener('touchmove', this, false);
         },
@@ -264,7 +269,7 @@
         _onEnd: function(ev) {
             console.log('Scroll: onEnd');
 
-            var tempTouch = __isMobile ? ev.changedTouches[0].pageY : ev.pageY;
+            var tempTouch = ev.changedTouches[0].pageY;
             // 誤タップを無視
             if ((this._startTouchY - tempTouch) < TOUCH_MISS_GAP && (this._startTouchY - tempTouch) > -TOUCH_MISS_GAP) {
                 this._speedY = 0;
@@ -290,7 +295,7 @@
             console.log('Scroll: onMove');
             ev.preventDefault();
 
-            var tempTouchY = __isMobile ? ev.changedTouches[0].pageY : ev.pageY;
+            var tempTouchY = ev.changedTouches[0].pageY;
             var tempAreaY = this._getScrollAreaY();
 
             this._newAreaY = tempTouchY - this._startTouchY + this._startAreaY;
