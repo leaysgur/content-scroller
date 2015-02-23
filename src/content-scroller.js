@@ -14,6 +14,8 @@
 }(window, function(global, Scroll, undefined) {
     'use strict';
 
+    var document = global.document;
+
     // 環境情報やら定数やら
     // ----------------------------------------------------------------------------
     var document = global.document;
@@ -68,9 +70,9 @@
             console.log('Scroll: initialize', options);
 
             this._ui = {};
-            this._ui.scrollWrap = options.scrollWrap || q('#js-scroll-wrap');
-            this._ui.scrollArea = options.scrollArea || q('#js-scroll-area');
-            this._ui.scrollBar  = options.scrollBar  || q('#js-scroll-bar');
+            this._ui.scrollWrap = options.scrollWrap || __id('js-scroll-wrap');
+            this._ui.scrollArea = options.scrollArea || __id('js-scroll-area');
+            this._ui.scrollBar  = options.scrollBar  || __id('js-scroll-bar');
 
             // 要素ちゃんとある？
             this._ensureElm();
@@ -452,6 +454,9 @@
 
     // プライベート関数たち
     // ----------------------------------------------------------------------------
+    // getElementByIdのショートカット
+    function __id(id) { return document.getElementById(id); };
+
     /**
      * いまの環境で使えるtranslate3dの値をセット
      *
